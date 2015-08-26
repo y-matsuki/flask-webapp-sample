@@ -22,9 +22,15 @@ def index():
     return redirect(url_for('login'))
 
 @app.route('/home')
-def home(name=None):
+def home():
     if 'username' in session:
-        return render_template('hello.html', name=name)
+        return render_template('home.html', username=session['username'])
+    return redirect(url_for('login'))
+
+@app.route('/user')
+def user():
+    if 'username' in session:
+        return render_template('user.html', username=session['username'])
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['POST', 'GET'])
