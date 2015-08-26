@@ -1,0 +1,14 @@
+<!doctype html>
+<title>Login</title>
+
+{% if error %}
+  <p>{{ error }}</p>
+{% endif %}
+
+<form action="/login" method="post">
+ID:<input type="text" name="username"/>
+<br/>
+PW:<input type="password" name="password"/>
+<br/>
+<input type="submit" value="LOGIN"/>
+</form>

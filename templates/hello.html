@@ -1,0 +1,12 @@
+<!doctype html>
+<title>Hello from Flask</title>
+<link rel="stylesheet" href="//oss.maxcdn.com/semantic-ui/2.0.8/semantic.min.css"/>
+{% if name %}
+  <h1>Hello {{ name }}!</h1>
+{% else %}
+  <h1>Hello World!</h1>
+{% endif %}
+<a href="/logout">logout</a>
+<script src="//oss.maxcdn.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="//oss.maxcdn.com/semantic-ui/2.0.8/semantic.min.js"></script>
+<script src="static/home.js"></script>
