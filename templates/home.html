@@ -1,13 +1,45 @@
 <!doctype html>
 <title>Hello from Flask</title>
 <link rel="stylesheet" href="//oss.maxcdn.com/semantic-ui/2.0.8/semantic.min.css"/>
-{% if username %}
-  <h1>Hello {{ username }}!</h1>
-{% else %}
-  <h1>Hello World!</h1>
-{% endif %}
-<a href="/user">user</a>
-<a href="/logout">logout</a>
+<style>
+.column {
+  margin-top: 1em;
+  margin-left: 1em;
+}
+</style>
+<body>
+<div class="ui grid">
+
+  <div class="two wide column">
+    <div class="ui compact vertical labeled icon menu">
+      <a class="item" href="user">
+        <i class="user icon"></i>
+        User
+      </a>
+      <a class="item">
+        <i class="video camera icon"></i>
+        Channels
+      </a>
+      <a class="item active" href="logout">
+        <i class="video play icon"></i>
+        Logout
+      </a>
+    </div>
+  </div>
+
+  <div class="twelve wide column">
+    <div class="ui segment">
+    {% if username %}
+      <h1>Hello {{ username }}!</h1>
+    {% else %}
+      <h1>Hello World!</h1>
+    {% endif %}
+    </div>
+  </div>
+
+</div>
+
 <script src="//oss.maxcdn.com/jquery/2.1.4/jquery.min.js"></script>
 <script src="//oss.maxcdn.com/semantic-ui/2.0.8/semantic.min.js"></script>
 <script src="static/user.js"></script>
+</body>

@@ -3,13 +3,13 @@ from flask import request, redirect, url_for
 from flask import render_template
 from pymongo import MongoClient
 from passlib.apps import custom_app_context as pwd_context
-from api.api import api
+from blueprint.common import db
+from blueprint.user import bp_user
+from blueprint.event import bp_event
 
 app = Flask(__name__)
-app.register_blueprint(api, url_prefix='/api')
-
-client = MongoClient('localhost', 27017)
-db  = client.local
+app.register_blueprint(bp_user, url_prefix='/user')
+app.register_blueprint(bp_event, url_prefix='/event')
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -27,18 +27,11 @@ def home():
         return render_template('home.html', username=session['username'])
     return redirect(url_for('login'))
 
-@app.route('/user')
-def user():
-    if 'username' in session:
-        return render_template('user.html', username=session['username'])
-    return redirect(url_for('login'))
-
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         if valid_login(request.form['username'],
                        request.form['password']):
-            session['username'] = request.form['username']
             return redirect(url_for('home'))
         else:
             error = 'Invalid username/password'
@@ -58,6 +51,8 @@ def valid_login(username, password):
     if user == None:
         return False
     if pwd_context.verify(password, user["password"]):
+        session['username'] = user['username']
+        session['is_admin'] = user['is_admin']
         return True
     return False
 
