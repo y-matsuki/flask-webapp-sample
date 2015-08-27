@@ -1,2 +1,7 @@
-<!doctype html>
-<title>Event</title>
+{% extends "layout.html" %}
+{% block body %}
+<p>events</p>
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/event.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!doctype html>
+<title>Hello from Flask</title>
+<link rel="stylesheet" href="//oss.maxcdn.com/semantic-ui/2.0.8/semantic.min.css"/>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+.column {
+  margin-top: 1em;
+  margin-left: 1em;
+}
+</style>
+<body>
+<div class="ui grid">
+
+  <div class="twelve wide column">
+    <div class="ui segment">
+      {% block body %}{% endblock %}
+    </div>
+  </div>
+
+  <div class="two wide column">
+    <div class="ui compact vertical labeled icon menu">
+      <a class="item" href="user">
+        <i class="user icon"></i>
+        User
+      </a>
+      <a class="item">
+        <i class="video camera icon"></i>
+        Channels
+      </a>
+      <a class="item active" href="logout">
+        <i class="sign out icon"></i>
+        Logout
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script src="//oss.maxcdn.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="//oss.maxcdn.com/semantic-ui/2.0.8/semantic.min.js"></script>
+{% block script %}{% endblock %}
+</body>

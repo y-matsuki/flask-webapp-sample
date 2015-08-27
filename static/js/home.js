@@ -1,4 +1,4 @@
 console.log('hello, world!');
-$.get('/api/hoge', function(data){
+$.get('/event/api', function(data){
   console.log(data);
 });

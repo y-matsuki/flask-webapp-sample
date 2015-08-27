@@ -1,12 +1,11 @@
-<!doctype html>
-<title>{{ username }}</title>
-<link rel="stylesheet" href="//oss.maxcdn.com/semantic-ui/2.0.8/semantic.min.css"/>
+{% extends "layout.html" %}
+{% block body %}
 {% if username %}
   <h1>User: {{ username }}!</h1>
 {% else %}
   <h1>User: NoName</h1>
 {% endif %}
-<a href="/logout">logout</a>
-<script src="//oss.maxcdn.com/jquery/2.1.4/jquery.min.js"></script>
-<script src="//oss.maxcdn.com/semantic-ui/2.0.8/semantic.min.js"></script>
-<script src="static/user.js"></script>
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/user.js') }}"></script>
+{% endblock %}
