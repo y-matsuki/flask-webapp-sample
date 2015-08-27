@@ -4,10 +4,12 @@ from flask import render_template
 from pymongo import MongoClient
 from passlib.apps import custom_app_context as pwd_context
 from blueprint.common import db
+from blueprint.home import bp_home
 from blueprint.user import bp_user
 from blueprint.event import bp_event
 
 app = Flask(__name__)
+app.register_blueprint(bp_home, url_prefix='/home')
 app.register_blueprint(bp_user, url_prefix='/user')
 app.register_blueprint(bp_event, url_prefix='/event')
 
@@ -19,12 +21,6 @@ def page_not_found(error):
 def index():
     if 'username' in session:
         return redirect(url_for('home'))
-    return redirect(url_for('login'))
-
-@app.route('/home')
-def home():
-    if 'username' in session:
-        return render_template('home.html', username=session['username'])
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -44,6 +40,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
+    session.pop('is_admin', None)
     return redirect(url_for('index'))
 
 def valid_login(username, password):
