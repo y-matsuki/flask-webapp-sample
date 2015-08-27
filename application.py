@@ -28,13 +28,13 @@ def login():
     if request.method == 'POST':
         if valid_login(request.form['username'],
                        request.form['password']):
-            return redirect(url_for('home'))
+            return redirect('/home')
         else:
             error = 'Invalid username/password'
             return render_template('login.html', error=error)
     else:
         if 'username' in session:
-            return redirect(url_for('home'))
+            return redirect('/home')
         return render_template('login.html')
 
 @app.route('/logout')
