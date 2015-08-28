@@ -13,14 +13,20 @@
 
   <div class="two wide column">
     <div class="ui compact vertical labeled icon menu">
+      <a class="item" href="/home">
+        <i class="home icon"></i>
+        Home
+      </a>
       <a class="item" href="/user">
-        <i class="user icon"></i>
-        User
+        <i class="users icon"></i>
+        Users
       </a>
+      {% if session.is_admin %}
       <a class="item" href="/event">
-        <i class="video camera icon"></i>
-        Channels
+        <i class="calendar outline icon"></i>
+        Events
       </a>
+      {% endif %}
       <a class="item active" href="/logout">
         <i class="sign out icon"></i>
         Logout

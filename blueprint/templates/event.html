@@ -3,7 +3,40 @@
 Event
 {% endblock %}
 {% block body %}
-<p>events</p>
+<form class="ui form" action="/api/event/{{ event.event_id }}" method="post">
+  <div class="field">
+    <label>Title</label>
+    <input type="text" name="title" placeholder="Title" value="{{ event.title }}">
+  </div>
+  <div class="field">
+    <label>Date</label>
+    <input type="text" name="date" placeholder="Date" value="{{ event.date }}">
+  </div>
+  {% for theme in event.themes %}
+  <div class="fields">
+    <div class="two wide field">
+      <p>{{ loop.index }}.</p>
+    </div>
+    <div class="four wide field">
+      <select class="ui fluid search dropdown" name="username{{ loop.index }}">
+        <option value=""></option>
+        {% for user in users %}
+          {% if theme.username == user.username %}
+          <option value="{{ user.username }}" selected="">{{ user.username }}</option>
+          {% else %}
+          <option value="{{ user.username }}">{{ user.username }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="ten wide field">
+      <input type="text" name="title{{ loop.index }}" value="{{ theme.title }}">
+    </div>
+  </div>
+  {% endfor %}
+
+  <button class="ui primary button" type="submit">Submit</button>
+</form>
 {% endblock %}
 {% block script %}
 <script src="{{ url_for('static', filename='js/event.js') }}"></script>

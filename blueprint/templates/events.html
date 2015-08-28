@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}
+Event
+{% endblock %}
+{% block body %}
+<table class="ui striped table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for event in events %}
+    <tr>
+      <td><a href="/event/{{ event.event_id}}">{{ event.title }}</a></td>
+      <td>{{ event.date }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% if session.is_admin %}
+<form class="ui form" action="/api/event" method="post">
+<div class="two fields">
+  <div class="field">
+    <div class="ui input">
+      <input type="text" name="event_id" placeholder="New EventId">
+    </div>
+  </div>
+  <div class="two wide field">
+    <div class="ui input">
+      <input type="submit" class="ui primary button" value="AddEvent">
+    </div>
+  </div>
+</div>
+</form>
+{% endif %}
+{% endblock %}
+{% block script %}
+{% endblock %}

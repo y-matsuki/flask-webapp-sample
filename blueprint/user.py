@@ -8,28 +8,10 @@ from common import db
 
 bp_user = Blueprint('bp_user', __name__)
 
-@bp_user.route('', methods=['GET'])
-@bp_user.route('/<username>', methods=['GET'])
-def get_user(username=None):
-    if username == None:
-        if 'username' in session and session['is_admin']:
-            return dumps(db.users.find())
-        return jsonify([]), 403
-    else:
-        if 'username' in session:
-            if session['username'] == username or session['is_admin']:
-                items = db.users.find({'username':username})
-                for item in items:
-                    return dumps(item)
-                return jsonify({}), 404
-        return jsonify({}), 403
-
 @bp_user.route('', methods=['POST'])
 def add_user():
-    print('AAA')
     if 'username' in session and session['is_admin']:
         if request.form.has_key('username'):
-            print 'BBB: ', request.form['username']
             username = request.form['username']
             user = {
                 "username": username,
@@ -40,6 +22,7 @@ def add_user():
             db.users.update_one({"username":username}, {"$set": user}, upsert=True)
             return redirect('/user/%s' % username)
     return redirect('/user')
+
 
 @bp_user.route('/<username>', methods=['POST'])
 def update_user(username=None):

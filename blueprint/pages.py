@@ -3,6 +3,7 @@ from flask import abort, request, session, redirect
 from jinja2 import TemplateNotFound
 
 from passlib.apps import custom_app_context as pwd_context
+from datetime import datetime
 from common import db
 
 pages = Blueprint('pages', __name__,
@@ -19,6 +20,20 @@ def show(page):
     except TemplateNotFound:
         abort(404)
 
+@pages.route('/home')
+def home():
+    events = db.events.find()
+    past_events = []
+    next_events = []
+    for event in events:
+        print(event)
+        if event['date'] > datetime.utcnow():
+            next_events.append(event)
+        else:
+            past_events.append(event)
+    return render_template('home.html', past_events=past_events,
+                                        next_events=next_events)
+
 @pages.route('/user')
 @pages.route('/user/<username>')
 def user(username=None):
@@ -29,10 +44,24 @@ def user(username=None):
         if session['username'] == username or session['is_admin']:
             users = db.users.find({"username":username})
             for user in users:
-                print(user)
                 return render_template('user.html', user=user)
         else:
             return redirect('/user')
+
+
+@pages.route('/event')
+@pages.route('/event/<event_id>')
+def event(event_id=None):
+    if event_id == None:
+        events = db.events.find()
+        return render_template('events.html', events=events)
+    else:
+        events = db.events.find({"event_id":event_id})
+        for event in events:
+            users = db.users.find()
+            print(event)
+            return render_template('event.html', event=event, users=list(users))
+        return redirect('/event')
 
 @pages.route('/login', methods=['POST', 'GET'])
 def login():
