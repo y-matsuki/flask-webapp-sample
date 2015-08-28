@@ -13,11 +13,20 @@ pages = Blueprint('pages', __name__,
 def show(page):
     try:
         if 'username' in session:
-            print('sss: ' + page)
             return render_template('%s.html' % page)
         else:
             return render_template('login.html')
     except TemplateNotFound:
+        abort(404)
+
+@pages.route('/user')
+@pages.route('/user/<username>')
+def user(username=None):
+    if 'username' in session:
+        users = db.users.find({"username":username})
+        for user in users:
+            print(user)
+            return render_template('user.html', user=user)
         abort(404)
 
 @pages.route('/login', methods=['POST', 'GET'])

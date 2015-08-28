@@ -11,7 +11,7 @@ bp_event = Blueprint('bp_event', __name__,
 @bp_event.route('', methods=['GET'])
 @bp_event.route('/<date>', methods=['GET'])
 def get_events(date=None):
-    if event_id == None:
+    if date == None:
         if 'username' in session and session['is_admin']:
             return dumps(db.events.find())
         return jsonify([]), 403
@@ -21,7 +21,6 @@ def get_events(date=None):
         return jsonify({}), 403
 
 
-@bp_event.route('', methods=['POST'])
 @bp_event.route('/<date>', methods=['POST'])
 def post_events(date=None):
     if 'username' in session and session['is_admin']:
@@ -29,7 +28,7 @@ def post_events(date=None):
         if date != None:
             event = db.events.find({'date':date})
         event['tite'] = request.form['title']
-        event['date'] = request.form['date'],
+        event['date'] = request.form['date']
         event['start_time'] = request.form['start_time']
         event['end_time'] = request.form['end_time']
         db.users.update_one({"date":event['date']}, {"$set": event}, upsert=True)

@@ -1,10 +1,26 @@
 {% extends "layout.html" %}
 {% block body %}
-{% if username %}
-  <h1>User: {{ username }}!</h1>
-{% else %}
-  <h1>User: NoName</h1>
-{% endif %}
+<form class="ui form" action="/api/user/{{ user.username }}" method="post">
+  <div class="field">
+    <label>UserName</label>
+    <input type="text" name="username" placeholder="UserName" value="{{ user.username }}">
+  </div>
+  <div class="field">
+    <label>Password</label>
+    <input type="password" name="password" placeholder="Password" value="{{ user.password }}">
+  </div>
+  <div class="field">
+    <label>Email</label>
+    <input type="email" name="mailaddr" placeholder="Email" value="{{ user.mailaddr }}">
+  </div>
+  <div class="field">
+    <div class="ui checkbox">
+      <input type="checkbox" name="is_admin" checked="{{ user.is_admin }}">
+      <label>Admin</label>
+    </div>
+  </div>
+  <button class="ui primary button" type="submit">Submit</button>
+</form>
 {% endblock %}
 {% block script %}
 <script src="{{ url_for('static', filename='js/user.js') }}"></script>
