@@ -1,13 +1,7 @@
 <!doctype html>
-<title>Hello from Flask</title>
+<title>{% block title %}{% endblock %}</title>
 <link rel="stylesheet" href="//oss.maxcdn.com/semantic-ui/2.0.8/semantic.min.css"/>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-<style>
-.column {
-  margin-top: 1em;
-  margin-left: 1em;
-}
-</style>
 <body>
 <div class="ui grid">
 
@@ -38,8 +32,6 @@
 
 <script src="//oss.maxcdn.com/jquery/2.1.4/jquery.min.js"></script>
 <script src="//oss.maxcdn.com/semantic-ui/2.0.8/semantic.min.js"></script>
-<script src="//oss.maxcdn.com/react/0.13.3/react.min.js"></script>
-<script src="//oss.maxcdn.com/react/0.13.3/JSXTransformer.js"></script>
 <script src="//oss.maxcdn.com/jquery/2.1.4/jquery.min.js"></script>
 {% block script %}{% endblock %}
 </body>

@@ -1,9 +1,13 @@
 {% extends "layout.html" %}
+{% block title %}
+User
+{% endblock %}
 {% block body %}
 <form class="ui form" action="/api/user/{{ user.username }}" method="post">
-  <div class="field">
+  <div class="disabled field">
     <label>UserName</label>
-    <input type="text" name="username" placeholder="UserName" value="{{ user.username }}">
+    <input type="hidden" name="username" value="{{ user.username }}">
+    <input type="text" disabled placeholder="UserName" value="{{ user.username }}">
   </div>
   <div class="field">
     <label>Password</label>
@@ -13,15 +17,20 @@
     <label>Email</label>
     <input type="email" name="mailaddr" placeholder="Email" value="{{ user.mailaddr }}">
   </div>
+  {% if session.is_admin %}
   <div class="field">
     <div class="ui checkbox">
-      <input type="checkbox" name="is_admin" checked="{{ user.is_admin }}">
+      {% if user.is_admin %}
+      <input type="checkbox" name="is_admin" checked="True">
+      {% else %}
+      <input type="checkbox" name="is_admin">
+      {% endif %}
       <label>Admin</label>
     </div>
   </div>
+  {% endif %}
   <button class="ui primary button" type="submit">Submit</button>
 </form>
 {% endblock %}
 {% block script %}
-<script src="{{ url_for('static', filename='js/user.js') }}"></script>
 {% endblock %}

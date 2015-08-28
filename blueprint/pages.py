@@ -22,12 +22,17 @@ def show(page):
 @pages.route('/user')
 @pages.route('/user/<username>')
 def user(username=None):
-    if 'username' in session:
-        users = db.users.find({"username":username})
-        for user in users:
-            print(user)
-            return render_template('user.html', user=user)
-        abort(404)
+    if username == None:
+        users = db.users.find()
+        return render_template('users.html', users=users)
+    else:
+        if session['username'] == username or session['is_admin']:
+            users = db.users.find({"username":username})
+            for user in users:
+                print(user)
+                return render_template('user.html', user=user)
+        else:
+            return redirect('/user')
 
 @pages.route('/login', methods=['POST', 'GET'])
 def login():
@@ -39,9 +44,7 @@ def login():
             error = 'Invalid username/password'
             return render_template('login.html', error=error)
     else:
-        if 'username' in session:
-            return redirect('/home')
-        return render_template('login.html')
+        return redirect('/home')
 
 @pages.route('/logout')
 def logout():

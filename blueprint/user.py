@@ -8,7 +8,7 @@ from common import db
 
 bp_user = Blueprint('bp_user', __name__)
 
-@bp_user.route('')
+@bp_user.route('', methods=['GET'])
 @bp_user.route('/<username>', methods=['GET'])
 def get_user(username=None):
     if username == None:
@@ -24,18 +24,34 @@ def get_user(username=None):
                 return jsonify({}), 404
         return jsonify({}), 403
 
+@bp_user.route('', methods=['POST'])
+def add_user():
+    print('AAA')
+    if 'username' in session and session['is_admin']:
+        if request.form.has_key('username'):
+            print 'BBB: ', request.form['username']
+            username = request.form['username']
+            user = {
+                "username": username,
+                "password": pwd_context.encrypt("password"),
+                "mailaddr": "user@example.com",
+                "is_admin": False
+            }
+            db.users.update_one({"username":username}, {"$set": user}, upsert=True)
+            return redirect('/user/%s' % username)
+    return redirect('/user')
+
 @bp_user.route('/<username>', methods=['POST'])
-def post_user(username=None):
+def update_user(username=None):
     if 'username' in session and username != None:
         user = db.users.find_one({"username":username})
         user['username'] = request.form['username']
         if request.form['password'] != user['password']:
             user['password'] = pwd_context.encrypt(request.form['password'])
         user['mailaddr'] = request.form['mailaddr']
-        if request.form['is_admin'] == 'on':
+        if request.form.has_key('is_admin'):
             user['is_admin'] = True
         else:
             user['is_admin'] = False
-        pass
         db.users.update_one({"username":username}, {"$set": user}, upsert=True)
-    return redirect('/user/%s' % username)
+    return redirect('/user')

@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}
+Users
+{% endblock %}
+{% block body %}
+<table class="ui striped table">
+  <thead>
+    <tr>
+      <th>UserName</th>
+      <th>MailAddress</th>
+      <th>Admin</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      {% if session.is_admin or session.username == user.username %}
+      <td><a href="/user/{{ user.username }}">{{ user.username }}</a></td>
+      {% else %}
+      <td>{{ user.username }}</td>
+      {% endif %}
+      <td>{{ user.mailaddr }}</td>
+      {% if user.is_admin %}
+      <td><i class="large green checkmark icon"></i></td>
+      {% else %}
+      <td></td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% if session.is_admin %}
+<form class="ui form" action="/api/user" method="post">
+<div class="two fields">
+  <div class="field">
+    <div class="ui input">
+      <input type="text" name="username" placeholder="New UserName">
+    </div>
+  </div>
+  <div class="two wide field">
+    <div class="ui input">
+      <input type="submit" class="ui primary button" value="AddUser">
+    </div>
+  </div>
+</div>
+</form>
+{% endif %}
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/user.js') }}"></script>
+{% endblock %}
