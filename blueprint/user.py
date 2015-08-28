@@ -7,24 +7,8 @@ from common import db
 
 bp_user = Blueprint('bp_user', __name__)
 
-@bp_user.route('/')
+@bp_user.route('')
 @bp_user.route('/<username>')
-def user(username=None):
-    if 'username' in session:
-        if session['is_admin']:
-            if username == None:
-                return render_template('user.html', username='** admin **')
-            else:
-                return render_template('user.html', username=username)
-        else:
-            if username == session['username']:
-                return render_template('user.html', username=session['username'])
-            else:
-                return redirect('/user/' + session['username'])
-    return redirect(url_for('login'))
-
-@bp_user.route('/api')
-@bp_user.route('/api/<username>')
 def user_by_name(username=None):
     if username == None:
         if 'username' in session and session['is_admin']:
