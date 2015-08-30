@@ -9,12 +9,11 @@ from common import db
 pages = Blueprint('pages', __name__,
                 template_folder='templates')
 
-@pages.route('/', defaults={'page': 'index'})
-@pages.route('/<page>')
-def show(page):
+@pages.route('/')
+def show():
     try:
         if 'username' in session:
-            return render_template('%s.html' % page)
+            return redirect('/home')
         else:
             return render_template('login.html')
     except TemplateNotFound:
@@ -22,22 +21,46 @@ def show(page):
 
 @pages.route('/home')
 def home():
-    events = db.events.find()
-    past_events = []
-    next_events = []
-    for event in events:
-        print(event)
-        if event['date'] > datetime.utcnow():
-            next_events.append(event)
-        else:
-            past_events.append(event)
-    return render_template('home.html', past_events=past_events,
-                                        next_events=next_events)
+    if 'username' in session:
+        events = db.events.find()
+        past_events = []
+        next_events = []
+        for event in events:
+            if event['date'] > datetime.utcnow():
+                next_events.append(event)
+            else:
+                past_events.append(event)
+        return render_template('home.html', past_events=past_events,
+                                            next_events=next_events)
+    else:
+        return render_template('login.html')
+
+@pages.route('/comments/<event_id>/<owner>')
+def comments(event_id=None,owner=None):
+    comments = db.comments.find({"event_id":event_id, "owner":owner})
+    return render_template('/comments.html', comments=list(comments))
+
+@pages.route('/comment/<event_id>/<username>')
+def comment(event_id=None,username=None):
+    owner = session['username']
+    rating = db.ratings.find_one({"owner":owner,"event_id":event_id,"username":username});
+    axes = []
+    if rating == None:
+        axes = [
+            {"name":"theme","value":3}, {"name":"authority","value":3},
+            {"name":"originality","value":3}, {"name":"logicality","value":3},
+            {"name":"time","value":3}, {"name":"deeper","value":3}
+        ]
+    else:
+        axes = rating['axes']
+    print(axes)
+    return render_template('comment.html', event_id=event_id, username=username,
+                                           axes=axes)
 
 @pages.route('/user')
 @pages.route('/user/<username>')
 def user(username=None):
-    if username == None:
+    if username == None and 'username' in session:
         users = db.users.find()
         return render_template('users.html', users=users)
     else:

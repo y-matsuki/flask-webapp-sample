@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}
+Comment
+{% endblock %}
+{% block body %}
+<form class="ui form" action="/api/comment/{{ event_id }}/{{ username }}" method="post">
+  {% for axis in axes %}
+  <div class="inline fields">
+    <label for="{{ axis.name }}">{{ axis.name }}</label>
+    {% for idx in range(5)%}
+    <div class="field">
+      <div class="ui radio checkbox {{ axis.name }}">
+        {% if axis.value == idx + 1 %}
+        <input type="radio" name="{{ axis.name }}" value="{{ idx + 1 }}" class="hidden" checked="">
+        {% else %}
+        <input type="radio" name="{{ axis.name }}" value="{{ idx + 1 }}" class="hidden">
+        {% endif %}
+        <label>{{ idx + 1 }}</label>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+  <div class="field">
+    <label>Good point</label>
+    <textarea name="good" rows="2"></textarea>
+  </div>
+  <div class="field">
+    <label>Bad point</label>
+    <textarea name="bad" rows="2"></textarea>
+  </div>
+  <button class="ui primary button" type="submit">Submit</button>
+</form>
+{% endblock %}
+{% block script %}
+<script src="//oss.maxcdn.com/semantic-ui/2.0.8/components/checkbox.min.js"></script>
+<script src="{{ url_for('static', filename='js/comment.js') }}"></script>
+{% endblock %}

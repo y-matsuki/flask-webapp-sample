@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}
+Comment
+{% endblock %}
+{% block body %}
+<h3 class="ui dividing header">Comments</h3>
+{% for comment in comments %}
+{% if comment.type == 'good' %}
+<div class="ui teal message">
+{% else %}
+<div class="ui violet message">
+{% endif %}
+  <!-- <div class="header">
+    Changes in Service
+  </div> -->
+  <p>{{ comment.comment }}</p>
+</div>
+{% endfor %}
+{% endblock %}
+{% block script %}
+{% endblock %}

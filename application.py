@@ -7,12 +7,14 @@ from blueprint.pages import pages
 from blueprint.home import bp_home
 from blueprint.user import bp_user
 from blueprint.event import bp_event
+from blueprint.comment import bp_comment
 
 app = Flask(__name__)
 app.register_blueprint(pages)
 app.register_blueprint(bp_home, url_prefix='/api/home')
 app.register_blueprint(bp_user, url_prefix='/api/user')
 app.register_blueprint(bp_event, url_prefix='/api/event')
+app.register_blueprint(bp_comment, url_prefix='/api/comment')
 
 @app.errorhandler(404)
 def page_not_found(error):
