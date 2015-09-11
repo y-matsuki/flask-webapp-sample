@@ -4,23 +4,27 @@ Comment
 {% endblock %}
 {% block body %}
 <form class="ui form" action="/api/comment/{{ event_id }}/{{ username }}" method="post">
+  <table class="ui very basic teal table">
   {% for axis in axes %}
-  <div class="inline fields">
-    <label for="{{ axis.name }}">{{ axis.name }}</label>
-    {% for idx in range(5)%}
-    <div class="field">
-      <div class="ui radio checkbox {{ axis.name }}">
-        {% if axis.value == idx + 1 %}
-        <input type="radio" name="{{ axis.name }}" value="{{ idx + 1 }}" class="hidden" checked="">
-        {% else %}
-        <input type="radio" name="{{ axis.name }}" value="{{ idx + 1 }}" class="hidden">
-        {% endif %}
-        <label>{{ idx + 1 }}</label>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
+    <tr>
+      <td><label for="{{ axis.name }}">{{ axis.name }}</label></td>
+      {% for idx in range(5)%}
+      <td>
+        <div class="field">
+          <div class="ui radio checkbox {{ axis.name }}">
+            {% if axis.value == idx + 1 %}
+            <input type="radio" name="{{ axis.name }}" value="{{ idx + 1 }}" class="hidden" checked="">
+            {% else %}
+            <input type="radio" name="{{ axis.name }}" value="{{ idx + 1 }}" class="hidden">
+            {% endif %}
+            <label>{{ idx + 1 }}</label>
+          </div>
+        </div>
+      </td>
+      {% endfor %}
+    </tr>
   {% endfor %}
+  </table>
   <div class="field">
     <label>Good point</label>
     <textarea name="good" rows="2"></textarea>
