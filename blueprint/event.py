@@ -1,3 +1,4 @@
+import re
 from bson.json_util import dumps
 from flask import request, redirect, url_for
 from flask import render_template
@@ -14,6 +15,11 @@ def add_event():
     if 'username' in session and session['is_admin']:
         if request.form.has_key('event_id'):
             event_id = request.form['event_id']
+            if re.compile(r'^[0-9A-Za-z-_.]+$').search(event_id) == None:
+                events = db.events.find()
+                message = 'the event id contains invald character.'
+                return render_template('events.html', events=events,
+                                                      message=message)
             theme = { "username":"", "title":"" }
             event = {
                 "event_id": event_id,

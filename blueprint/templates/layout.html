@@ -6,6 +6,15 @@
 <div class="ui grid">
 
   <div class="twelve wide column">
+    {% if message %}
+    <div class="ui message">
+      <i class="close icon"></i>
+      <div class="header">
+        Error
+      </div>
+      <p>{{ message }}</p>
+    </div>
+    {% endif %}
     <div id="content" class="ui segment">
       {% block body %}{% endblock %}
     </div>
@@ -38,6 +47,6 @@
 
 <script src="//oss.maxcdn.com/jquery/2.1.4/jquery.min.js"></script>
 <script src="//oss.maxcdn.com/semantic-ui/2.0.8/semantic.min.js"></script>
-<script src="//oss.maxcdn.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/layout.js') }}"></script>
 {% block script %}{% endblock %}
 </body>
