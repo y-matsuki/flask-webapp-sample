@@ -24,21 +24,21 @@
     <div class="ui compact vertical labeled icon menu">
       <a class="item" href="/home">
         <i class="home icon"></i>
-        Home
+        トップ
       </a>
       <a class="item" href="/user">
         <i class="users icon"></i>
-        Users
+        参加者
       </a>
       {% if session.is_admin %}
       <a class="item" href="/event">
         <i class="calendar outline icon"></i>
-        Events
+        予定
       </a>
       {% endif %}
       <a class="item active" href="/logout">
         <i class="sign out icon"></i>
-        Logout
+        Exit
       </a>
     </div>
   </div>

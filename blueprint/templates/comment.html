@@ -7,7 +7,7 @@ Comment
   <table class="ui very basic teal table">
   {% for axis in axes %}
     <tr>
-      <td><label for="{{ axis.name }}">{{ axis.name }}</label></td>
+      <td><label for="{{ axis.name }}">{{ axis.jp_name }}</label></td>
       {% for idx in range(5)%}
       <td>
         <div class="field">
@@ -26,14 +26,14 @@ Comment
   {% endfor %}
   </table>
   <div class="field">
-    <label>Good point</label>
+    <label>良かった点</label>
     <textarea name="good" rows="2"></textarea>
   </div>
   <div class="field">
-    <label>Bad point</label>
+    <label>悪かった点</label>
     <textarea name="bad" rows="2"></textarea>
   </div>
-  <button class="ui primary button" type="submit">Submit</button>
+  <button class="ui primary button" type="submit">投稿</button>
 </form>
 {% endblock %}
 {% block script %}

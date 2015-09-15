@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from bson.json_util import dumps
 from flask import request, redirect, url_for
 from flask import render_template
@@ -14,12 +15,12 @@ bp_comment = Blueprint('bp_comment', __name__,
 def update_event(event_id=None,username=None):
     if 'username' in session and username != session['username']:
         axes = [
-            {"name":"theme",       "value": int(request.form['theme'])},
-            {"name":"authority",   "value": int(request.form['authority'])},
-            {"name":"originality", "value": int(request.form['originality'])},
-            {"name":"logicality",  "value": int(request.form['logicality'])},
-            {"name":"time",        "value": int(request.form['time'])},
-            {"name":"deeper",      "value": int(request.form['deeper'])}
+            {"name":"theme",       "jp_name": u"お題", "value": int(request.form['theme'])},
+            {"name":"authority",   "jp_name": u"説得力", "value": int(request.form['authority'])},
+            {"name":"originality", "jp_name": u"独創性", "value": int(request.form['originality'])},
+            {"name":"logicality",  "jp_name": u"論理性", "value": int(request.form['logicality'])},
+            {"name":"time",        "jp_name": u"時間配分", "value": int(request.form['time'])},
+            {"name":"deep",        "jp_name": u"深掘り力", "value": int(request.form['deeper'])}
         ]
         rating = {
             "event_id": event_id,

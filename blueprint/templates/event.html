@@ -5,11 +5,11 @@ Event
 {% block body %}
 <form class="ui form" action="/api/event/{{ event.event_id }}" method="post">
   <div class="field">
-    <label>Title</label>
+    <label>タイトル</label>
     <input type="text" name="title" placeholder="Title" value="{{ event.title }}">
   </div>
   <div class="field">
-    <label>Date</label>
+    <label>開催日時</label>
     <input type="text" name="date" placeholder="Date" value="{{ event.date }}">
   </div>
   {% for theme in event.themes %}
@@ -35,7 +35,7 @@ Event
   </div>
   {% endfor %}
 
-  <button class="ui primary button" type="submit">Submit</button>
+  <button class="ui primary button" type="submit">保存</button>
 </form>
 {% endblock %}
 {% block script %}

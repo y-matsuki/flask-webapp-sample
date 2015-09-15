@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, url_for
 from flask import abort, request, session, redirect
 from jinja2 import TemplateNotFound
@@ -47,9 +48,12 @@ def comment(event_id=None,username=None):
     axes = []
     if rating == None:
         axes = [
-            {"name":"theme","value":3}, {"name":"authority","value":3},
-            {"name":"originality","value":3}, {"name":"logicality","value":3},
-            {"name":"time","value":3}, {"name":"deeper","value":3}
+            {"name":"theme",       "jp_name": u"お題", "value":3},
+            {"name":"authority",   "jp_name": u"説得力", "value":3},
+            {"name":"originality", "jp_name": u"独創性", "value":3},
+            {"name":"logicality",  "jp_name": u"論理性", "value":3},
+            {"name":"time",        "jp_name": u"時間配分", "value":3},
+            {"name":"deep",        "jp_name": u"深掘り力", "value":3}
         ]
     else:
         axes = rating['axes']
