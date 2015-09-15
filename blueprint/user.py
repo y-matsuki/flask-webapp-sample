@@ -38,3 +38,14 @@ def update_user(username=None):
             user['is_admin'] = False
         db.users.update_one({"username":username}, {"$set": user}, upsert=True)
     return redirect('/user')
+
+
+@bp_user.route('/<username>', methods=['DELETE'])
+def delete_user(username=None):
+    print(username)
+    if 'username' in session and username != None:
+        user = db.users.find_one({"username":username})
+        if user:
+            db.users.delete_one(user)
+    return redirect('/user', code=200)
+    # return redirect(url_for('user'))

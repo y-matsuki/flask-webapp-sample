@@ -6,6 +6,10 @@ body {
   background-size: 100% 1.2em;
 }
 
+.panel {
+  background-color: orange;
+}
+
 .column {
   margin-top: 1em;
   margin-left: 1em;
