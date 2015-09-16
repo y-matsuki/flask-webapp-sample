@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 from bson.json_util import dumps
 from flask import request, redirect, url_for
