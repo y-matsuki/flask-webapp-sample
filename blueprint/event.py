@@ -37,10 +37,12 @@ def add_event():
                 return render_template('events.html', events=events,
                                                       message=message)
             theme = { "username":"", "title":"" }
+            today = datetime.utcnow()
+            today = today.replace(microsecond=0, second=0, minute=0, hour=18)
             event = {
                 "event_id": event_id,
                 "title": event_id,
-                "date": datetime.utcnow(),
+                "date": today,
                 "themes": [theme.copy(),theme.copy(),theme.copy(),theme.copy()]
             }
             db.events.update_one({"event_id":event_id}, {"$set": event}, upsert=True)
@@ -53,7 +55,7 @@ def update_event(event_id=None):
     if 'username' in session and session['is_admin'] and event_id != None:
         event = db.events.find_one({"event_id":event_id})
         event['title'] = request.form['title']
-        event['date'] = datetime.strptime(request.form['date'], "%Y-%m-%d %H:%M:%S.%f")
+        event['date'] = datetime.strptime(request.form['date'], "%Y-%m-%d %H:%M:%S")
         themes = []
         for i in xrange(1, 5):
             username, title = "", ""

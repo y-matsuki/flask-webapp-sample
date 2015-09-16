@@ -1,4 +1,5 @@
 #!/bin/sh
+sudo ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 sudo yum install -y git
 echo "[MongoDB]
 name=MongoDB Repository
