@@ -12,7 +12,7 @@ from blueprint.comment import bp_comment
 app = Flask(__name__)
 app.register_blueprint(pages)
 app.register_blueprint(bp_home, url_prefix='/api/home')
-app.register_blueprint(bp_user, url_prefix='/api/user')
+app.register_blueprint(bp_user, url_prefix='/user')
 app.register_blueprint(bp_event, url_prefix='/api/event')
 app.register_blueprint(bp_comment, url_prefix='/api/comment')
 

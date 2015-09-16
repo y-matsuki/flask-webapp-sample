@@ -5,7 +5,7 @@ function delete_user(username) {
     },
     onApprove: function() {
       $.ajax({
-  			"url" : '/api/user/' + username,
+  			"url" : '/user/' + username,
   			"type" : "DELETE",
         "success": function() {
           window.location.reload(true);

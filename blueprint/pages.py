@@ -61,19 +61,19 @@ def comment(event_id=None,username=None):
     return render_template('comment.html', event_id=event_id, username=username,
                                            axes=axes)
 
-@pages.route('/user')
-@pages.route('/user/<username>')
-def user(username=None):
-    if username == None and 'username' in session:
-        users = db.users.find()
-        return render_template('users.html', users=users)
-    else:
-        if session['username'] == username or session['is_admin']:
-            users = db.users.find({"username":username})
-            for user in users:
-                return render_template('user.html', user=user)
-        else:
-            return redirect('/user')
+# @pages.route('/user')
+# @pages.route('/user/<username>')
+# def user(username=None):
+#     if username == None and 'username' in session:
+#         users = db.users.find()
+#         return render_template('users.html', users=users)
+#     else:
+#         if session['username'] == username or session['is_admin']:
+#             users = db.users.find({"username":username})
+#             for user in users:
+#                 return render_template('user.html', user=user)
+#         else:
+#             return redirect('/user')
 
 
 @pages.route('/event')
