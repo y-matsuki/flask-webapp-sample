@@ -17,9 +17,11 @@ Event
       <td><a href="/event/{{ event.event_id}}">{{ event.title }}</a></td>
       <td>{{ event.date }}</td>
       <td>
+        {% if session.is_admin %}
         <a class="ui icon red button" onclick="delete_event('{{ event.event_id }}')">
           <i class="trash icon"></i>
         </a>
+        {% endif %}
       </td>
     </tr>
     {% endfor %}
@@ -50,5 +52,7 @@ Event
 </div>
 {% endblock %}
 {% block script %}
+{% if session.is_admin %}
 <script src="{{ url_for('static', filename='js/event.js') }}"></script>
+{% endif %}
 {% endblock %}

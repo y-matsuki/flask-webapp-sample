@@ -27,9 +27,11 @@ Users
       <td></td>
       {% endif %}
       <td>
+        {% if session.is_admin %}
         <a class="ui icon red button" onclick="delete_user('{{ user.username }}')">
           <i class="trash icon"></i>
         </a>
+        {% endif %}
       </td>
     </tr>
     {% endfor %}
@@ -60,5 +62,7 @@ Users
 </div>
 {% endblock %}
 {% block script %}
+{% if session.is_admin %}
 <script src="{{ url_for('static', filename='js/user.js') }}"></script>
+{% endif %}
 {% endblock %}
