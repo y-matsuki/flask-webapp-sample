@@ -15,7 +15,7 @@ Event
   {% for theme in event.themes %}
   <div class="fields">
     <div class="two wide field">
-      <p>{{ loop.index }}.</p>
+      <label>発表者{{ loop.index }}.</label>
     </div>
     <div class="four wide field">
       <select class="ui fluid search dropdown" name="username{{ loop.index }}">
