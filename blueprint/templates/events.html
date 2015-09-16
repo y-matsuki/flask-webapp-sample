@@ -8,6 +8,7 @@ Event
     <tr>
       <th>タイトル</th>
       <th>開催日時</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -15,12 +16,17 @@ Event
     <tr>
       <td><a href="/event/{{ event.event_id}}">{{ event.title }}</a></td>
       <td>{{ event.date }}</td>
+      <td>
+        <a class="ui icon red button" onclick="delete_event('{{ event.event_id }}')">
+          <i class="trash icon"></i>
+        </a>
+      </td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
 {% if session.is_admin %}
-<form class="ui form" action="/api/event" method="post">
+<form class="ui form" action="/event" method="post">
 <div class="two fields">
   <div class="field">
     <div class="ui input">
@@ -35,6 +41,14 @@ Event
 </div>
 </form>
 {% endif %}
+<div class="ui small modal">
+  <div class="header">予定を削除してよろしいですか？</div>
+  <div class="actions">
+    <div class="ui approve primary button">はい</div>
+    <div class="ui cancel button">いいえ</div>
+  </div>
+</div>
 {% endblock %}
 {% block script %}
+<script src="{{ url_for('static', filename='js/event.js') }}"></script>
 {% endblock %}

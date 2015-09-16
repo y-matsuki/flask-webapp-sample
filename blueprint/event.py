@@ -10,6 +10,21 @@ from common import db
 bp_event = Blueprint('bp_event', __name__,
                     template_folder='templates')
 
+@bp_event.route('')
+@bp_event.route('/<event_id>')
+def event(event_id=None):
+    if event_id == None:
+        events = db.events.find()
+        return render_template('events.html', events=events)
+    else:
+        events = db.events.find({"event_id":event_id})
+        for event in events:
+            users = db.users.find()
+            print(event)
+            return render_template('event.html', event=event, users=list(users))
+        return redirect('/event')
+
+
 @bp_event.route('', methods=['POST'])
 def add_event():
     if 'username' in session and session['is_admin']:
@@ -34,7 +49,7 @@ def add_event():
 
 @bp_event.route('/<event_id>', methods=['POST'])
 def update_event(event_id=None):
-    if 'username' in session and event_id != None:
+    if 'username' in session and session['is_admin'] and event_id != None:
         event = db.events.find_one({"event_id":event_id})
         event['title'] = request.form['title']
         event['date'] = datetime.strptime(request.form['date'], "%Y-%m-%d %H:%M:%S.%f")
@@ -55,3 +70,13 @@ def update_event(event_id=None):
         return redirect('/event')
     else:
         return redirect('/event')
+
+
+@bp_event.route('/<event_id>', methods=['DELETE'])
+def delete_event(event_id=None):
+    if 'username' in session and session['is_admin'] and event_id != None:
+        event = db.events.find_one({"event_id":event_id})
+        if event:
+            db.events.delete_one(event)
+    events = db.events.find()
+    return render_template('events.html', events=events)

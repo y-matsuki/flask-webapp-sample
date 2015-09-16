@@ -3,7 +3,7 @@
 Comment
 {% endblock %}
 {% block body %}
-<form class="ui form" action="/api/comment/{{ event_id }}/{{ username }}" method="post">
+<form class="ui form" action="/comment/{{ event_id }}/{{ username }}" method="post">
   <table class="ui very basic teal table">
   {% for axis in axes %}
     <tr>

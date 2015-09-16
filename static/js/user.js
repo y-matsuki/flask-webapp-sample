@@ -13,4 +13,4 @@ function delete_user(username) {
   		});
     }
   }).modal('show');
-}
+};

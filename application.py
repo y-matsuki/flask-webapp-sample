@@ -11,10 +11,10 @@ from blueprint.comment import bp_comment
 
 app = Flask(__name__)
 app.register_blueprint(pages)
-app.register_blueprint(bp_home, url_prefix='/api/home')
+app.register_blueprint(bp_home, url_prefix='/home')
 app.register_blueprint(bp_user, url_prefix='/user')
-app.register_blueprint(bp_event, url_prefix='/api/event')
-app.register_blueprint(bp_comment, url_prefix='/api/comment')
+app.register_blueprint(bp_event, url_prefix='/event')
+app.register_blueprint(bp_comment, url_prefix='/comment')
 
 @app.errorhandler(404)
 def page_not_found(error):
