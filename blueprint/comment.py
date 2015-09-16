@@ -10,13 +10,13 @@ from common import db
 bp_comment = Blueprint('bp_comment', __name__,
                     template_folder='templates')
 
-@bp_comment.route('/comments/<event_id>/<owner>')
-def comments(event_id=None,owner=None):
+@bp_comment.route('/<event_id>/<owner>')
+def show_comments(event_id=None,owner=None):
     comments = db.comments.find({"event_id":event_id, "owner":owner})
     return render_template('/comments.html', comments=list(comments))
 
-@bp_comment.route('/comment/<event_id>/<username>')
-def comment(event_id=None,username=None):
+@bp_comment.route('/<event_id>/<owner>/<username>')
+def show_comment(event_id=None,owner=None,username=None):
     owner = session['username']
     rating = db.ratings.find_one({"owner":owner,"event_id":event_id,"username":username});
     axes = []
@@ -37,7 +37,7 @@ def comment(event_id=None,username=None):
 
 
 @bp_comment.route('/<event_id>/<username>', methods=['POST'])
-def update_event(event_id=None,username=None):
+def post_comment(event_id=None,username=None):
     if 'username' in session and username != session['username']:
         axes = [
             {"name":"theme",       "jp_name": u"お題", "value": int(request.form['theme'])},
