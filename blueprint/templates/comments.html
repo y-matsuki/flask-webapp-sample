@@ -17,10 +17,14 @@ Comment
 {% endif %}
   <p>{{ comment.comment }}</p>
 </div>
-<div id="store" hidden data-event_id="{{ event_id }}" data-presenter="{{ presenter }}"></div>
 {% endfor %}
 {% endblock %}
 {% block script %}
 <script src="//oss.maxcdn.com/chart.js/1.0.2/Chart.min.js"></script>
 <script src="{{ url_for('static', filename='js/comments.js') }}"></script>
+<script>
+$(document).ready(function(){
+  show_rating_graph('{{ event_id }}', '{{ presenter }}');
+});
+</script>
 {% endblock %}

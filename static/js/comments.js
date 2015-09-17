@@ -36,10 +36,7 @@ var options = {
   //String - A legend template
   // legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 };
-$(document).ready(function(){
-  var store = document.getElementById('store');
-  var event_id = store.dataset.event_id;
-  var presenter = store.dataset.presenter;
+function show_rating_graph(event_id, presenter) {
   $.get('/comment/api/' + event_id + '/' + presenter, function(rating) {
     var data = {
       labels: rating.labels,
@@ -59,4 +56,4 @@ $(document).ready(function(){
     var ctx = document.getElementById("ratingChart").getContext("2d");
     var myRadarChart = new Chart(ctx).Radar(data, options);
   });
-});
+};
