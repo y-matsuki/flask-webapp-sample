@@ -4,6 +4,7 @@ Comment
 {% endblock %}
 {% block body %}
 <h3 class="ui dividing header">『 {{ theme.title }} 』の評価 （{{ rating }}人）</h3>
+<a class="ui right floated teal button" onClick="history.back(); return false;">戻る</a>
 <div class="ui center aligned container">
   <canvas id="ratingChart" width="300" height="300"></canvas>
 </div>
