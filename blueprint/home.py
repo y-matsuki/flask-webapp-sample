@@ -17,7 +17,7 @@ def home():
         past_events = []
         next_events = []
         for event in events:
-            if event['date'] > datetime.utcnow():
+            if event['date'] > datetime.today():
                 next_events.append(event)
             else:
                 past_events.append(event)

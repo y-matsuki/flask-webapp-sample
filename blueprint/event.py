@@ -37,7 +37,7 @@ def add_event():
                 return render_template('events.html', events=events,
                                                       message=message)
             theme = { "username":"", "title":"" }
-            today = datetime.utcnow()
+            today = datetime.today()
             today = today.replace(microsecond=0, second=0, minute=0, hour=18)
             event = {
                 "event_id": event_id,
