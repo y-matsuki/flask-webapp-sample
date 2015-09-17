@@ -14,6 +14,11 @@ bp_comment = Blueprint('bp_comment', __name__,
 @bp_comment.route('/<event_id>/<presenter>')
 def show_comment(event_id=None,presenter=None):
     listener = session['username']
+    event = db.events.find_one({"event_id":event_id})
+    theme = {}
+    for item in event['themes']:
+        if presenter == item['username']:
+            theme = item
     rating = db.ratings.find_one({
         "event_id":event_id, "presenter":presenter, "listener":listener
     });
@@ -30,7 +35,7 @@ def show_comment(event_id=None,presenter=None):
             {"name":"deep",        "jp_name": u"深掘り力", "value":3}
         ]
     return render_template('comment.html', event_id=event_id, presenter=presenter,
-                                           axes=axes)
+                                           axes=axes, theme=theme)
 
 
 @bp_comment.route('/<event_id>/<presenter>', methods=['POST'])

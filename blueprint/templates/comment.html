@@ -3,6 +3,7 @@
 Comment
 {% endblock %}
 {% block body %}
+<h3 class="ui dividing header">『 {{ theme.title }} 』の評価 （発表者: {{ theme.username }}）</h3>
 <form class="ui form" action="/comment/{{ event_id }}/{{ presenter }}" method="post">
   <table class="ui very basic teal table">
   {% for axis in axes %}
