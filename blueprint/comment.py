@@ -26,14 +26,15 @@ def show_comment(event_id=None,presenter=None):
     if rating:
         axes = rating['axes']
     else:
-        axes = [
-            {"name":"theme",       "jp_name": u"お題", "value":3},
-            {"name":"authority",   "jp_name": u"説得力", "value":3},
-            {"name":"originality", "jp_name": u"独創性", "value":3},
-            {"name":"logicality",  "jp_name": u"論理性", "value":3},
-            {"name":"time",        "jp_name": u"時間配分", "value":3},
-            {"name":"deep",        "jp_name": u"深掘り力", "value":3}
-        ]
+        axes = {
+            "theme": 3,
+            "compel": 3,
+            "original": 3,
+            "logical": 3,
+            "time": 3,
+            "deep": 3
+        }
+    print(axes)
     return render_template('comment.html', event_id=event_id, presenter=presenter,
                                            axes=axes, theme=theme)
 
@@ -41,14 +42,14 @@ def show_comment(event_id=None,presenter=None):
 @bp_comment.route('/<event_id>/<presenter>', methods=['POST'])
 def post_comment(event_id=None,presenter=None):
     if 'username' in session and presenter != session['username']:
-        axes = [
-            {"name":"theme",       "jp_name": u"お題", "value": int(request.form['theme'])},
-            {"name":"authority",   "jp_name": u"説得力", "value": int(request.form['authority'])},
-            {"name":"originality", "jp_name": u"独創性", "value": int(request.form['originality'])},
-            {"name":"logicality",  "jp_name": u"論理性", "value": int(request.form['logicality'])},
-            {"name":"time",        "jp_name": u"時間配分", "value": int(request.form['time'])},
-            {"name":"deep",        "jp_name": u"深掘り力", "value": int(request.form['deep'])}
-        ]
+        axes = {
+            "theme": int(request.form['theme']),
+            "compel": int(request.form['compel']),
+            "original": int(request.form['original']),
+            "logical": int(request.form['logical']),
+            "time": int(request.form['time']),
+            "deep": int(request.form['deep'])
+        }
         listener = session['username']
         rating = {
             "event_id": event_id,
@@ -96,29 +97,23 @@ def show_comments(event_id=None):
 @bp_comment.route('/api/<event_id>/<presenter>')
 def get_rating(event_id=None,presenter=None):
     ratings = list(db.ratings.find({"event_id":event_id, "presenter":presenter}))
+    if not ratings:
+        return jsonify({ "data": [0, 0, 0, 0, 0, 0] })
     size = len(ratings) * 1.0
-    sum_theme, sum_authority, sum_originality, sum_logicality, sum_time, sum_deep = 0, 0, 0, 0, 0, 0
+    sum_theme, sum_compel, sum_original, sum_logical, sum_time, sum_deep = 0, 0, 0, 0, 0, 0
     for rating in ratings:
-        for axe in rating['axes']:
-            if axe['name'] == 'theme':
-                sum_theme += axe['value']
-            elif axe['name'] == 'authority':
-                sum_authority += axe['value']
-            elif axe['name'] == 'originality':
-                sum_originality += axe['value']
-            elif axe['name'] == 'logicality':
-                sum_logicality += axe['value']
-            elif axe['name'] == 'time':
-                sum_time += axe['value']
-            elif axe['name'] == 'deep':
-                sum_deep += axe['value']
+        sum_theme += rating['axes']['theme']
+        sum_compel += rating['axes']['compel']
+        sum_original += rating['axes']['original']
+        sum_logical += rating['axes']['logical']
+        sum_time += rating['axes']['time']
+        sum_deep += rating['axes']['deep']
     item = {
-        "labels": [u"お題", u"説得力", u"独創性", u"論理性", u"時間配分", u"深掘り力"],
         "data": [
             sum_theme / size,
-            sum_authority / size,
-            sum_originality / size,
-            sum_logicality / size,
+            sum_compel / size,
+            sum_original / size,
+            sum_logical / size,
             sum_time / size,
             sum_deep / size
         ]

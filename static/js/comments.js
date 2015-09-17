@@ -39,7 +39,7 @@ var options = {
 function show_rating_graph(event_id, presenter) {
   $.get('/comment/api/' + event_id + '/' + presenter, function(rating) {
     var data = {
-      labels: rating.labels,
+      labels: ["お題", "説得力", "独創性", "論理性", "時間配分", "深掘り力"],
       datasets: [
         {
           label: "Reco Study Rating",

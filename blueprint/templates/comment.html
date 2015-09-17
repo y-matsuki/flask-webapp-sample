@@ -6,17 +6,16 @@ Comment
 <h3 class="ui dividing header">『 {{ theme.title }} 』の評価 （発表者: {{ theme.username }}）</h3>
 <form class="ui form" action="/comment/{{ event_id }}/{{ presenter }}" method="post">
   <table class="ui very basic teal table">
-  {% for axis in axes %}
     <tr>
-      <td><label for="{{ axis.name }}">{{ axis.jp_name }}</label></td>
+      <td><label for="theme">お題</label></td>
       {% for idx in range(5)%}
       <td>
         <div class="field">
-          <div class="ui radio checkbox {{ axis.name }}">
-            {% if axis.value == idx + 1 %}
-            <input type="radio" name="{{ axis.name }}" value="{{ idx + 1 }}" class="hidden" checked="">
+          <div class="ui radio checkbox theme">
+            {% if axes.theme == idx + 1 %}
+            <input type="radio" name="theme" value="{{ idx + 1 }}" class="hidden" checked="">
             {% else %}
-            <input type="radio" name="{{ axis.name }}" value="{{ idx + 1 }}" class="hidden">
+            <input type="radio" name="theme" value="{{ idx + 1 }}" class="hidden">
             {% endif %}
             <label>{{ idx + 1 }}</label>
           </div>
@@ -24,7 +23,96 @@ Comment
       </td>
       {% endfor %}
     </tr>
-  {% endfor %}
+
+    <tr>
+      <td><label for="compel">説得力</label></td>
+      {% for idx in range(5)%}
+      <td>
+        <div class="field">
+          <div class="ui radio checkbox compel">
+            {% if axes.compel == idx + 1 %}
+            <input type="radio" name="compel" value="{{ idx + 1 }}" class="hidden" checked="">
+            {% else %}
+            <input type="radio" name="compel" value="{{ idx + 1 }}" class="hidden">
+            {% endif %}
+            <label>{{ idx + 1 }}</label>
+          </div>
+        </div>
+      </td>
+      {% endfor %}
+    </tr>
+
+    <tr>
+      <td><label for="original">独創性</label></td>
+      {% for idx in range(5)%}
+      <td>
+        <div class="field">
+          <div class="ui radio checkbox original">
+            {% if axes.original == idx + 1 %}
+            <input type="radio" name="original" value="{{ idx + 1 }}" class="hidden" checked="">
+            {% else %}
+            <input type="radio" name="original" value="{{ idx + 1 }}" class="hidden">
+            {% endif %}
+            <label>{{ idx + 1 }}</label>
+          </div>
+        </div>
+      </td>
+      {% endfor %}
+    </tr>
+
+    <tr>
+      <td><label for="logical">論理性</label></td>
+      {% for idx in range(5)%}
+      <td>
+        <div class="field">
+          <div class="ui radio checkbox logical">
+            {% if axes.logical == idx + 1 %}
+            <input type="radio" name="logical" value="{{ idx + 1 }}" class="hidden" checked="">
+            {% else %}
+            <input type="radio" name="logical" value="{{ idx + 1 }}" class="hidden">
+            {% endif %}
+            <label>{{ idx + 1 }}</label>
+          </div>
+        </div>
+      </td>
+      {% endfor %}
+    </tr>
+
+    <tr>
+      <td><label for="time">時間配分</label></td>
+      {% for idx in range(5)%}
+      <td>
+        <div class="field">
+          <div class="ui radio checkbox time">
+            {% if axes.time == idx + 1 %}
+            <input type="radio" name="time" value="{{ idx + 1 }}" class="hidden" checked="">
+            {% else %}
+            <input type="radio" name="time" value="{{ idx + 1 }}" class="hidden">
+            {% endif %}
+            <label>{{ idx + 1 }}</label>
+          </div>
+        </div>
+      </td>
+      {% endfor %}
+    </tr>
+
+    <tr>
+      <td><label for="deep">深掘り力</label></td>
+      {% for idx in range(5)%}
+      <td>
+        <div class="field">
+          <div class="ui radio checkbox deep">
+            {% if axes.deep == idx + 1 %}
+            <input type="radio" name="deep" value="{{ idx + 1 }}" class="hidden" checked="">
+            {% else %}
+            <input type="radio" name="deep" value="{{ idx + 1 }}" class="hidden">
+            {% endif %}
+            <label>{{ idx + 1 }}</label>
+          </div>
+        </div>
+      </td>
+      {% endfor %}
+    </tr>
   </table>
   <div class="field">
     <label>良かった点</label>
