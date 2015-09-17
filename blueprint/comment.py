@@ -59,7 +59,7 @@ def post_comment(event_id=None,presenter=None):
         db.ratings.update_one({
             "event_id":event_id, "presenter":presenter, "listener":listener},
             {"$set": rating}, upsert=True)
-        if request.form.has_key('good'):
+        if request.form.has_key('good') and request.form['good']:
             comment = {
                 "type": "good",
                 "event_id": event_id,
@@ -67,7 +67,7 @@ def post_comment(event_id=None,presenter=None):
                 "presenter": presenter
             }
             db.comments.insert(comment);
-        if request.form.has_key('bad'):
+        if request.form.has_key('bad') and request.form['bad']:
             comment = {
                 "type": "bad",
                 "event_id": event_id,
