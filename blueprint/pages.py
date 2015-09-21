@@ -52,9 +52,7 @@ def valid_login(username, password):
             session['is_admin'] = user['is_admin']
         except:
             print "Exception in user code:"
-            print '-'*60
             traceback.print_exc(file=sys.stdout)
-            print '-'*60s
 
         return True
     return False
