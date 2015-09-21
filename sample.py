@@ -21,6 +21,7 @@ app.register_blueprint(bp_event, url_prefix='/event')
 app.register_blueprint(bp_comment, url_prefix='/comment')
 
 SESSION_TYPE = 'mongodb'
+SESSION_PERMANENT = True
 MONGOLAB_URI = os.environ.get('MONGOLAB_URI', None)
 if MONGOLAB_URI:
     SESSION_MONGODB = MONGOLAB_URI.split('/')[2]
