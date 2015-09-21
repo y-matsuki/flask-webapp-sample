@@ -29,4 +29,4 @@ def index():
 if __name__ == '__main__':
     app.secret_key = '\x88\xfa\x0c\xaa\xb1%\xb29N\x8b\xd7\n\xdfa6\x1d\xd9a\xcd\xaa\x83\x08\xc1\xef'
     # app.run(debug=True)
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0',debug=True)

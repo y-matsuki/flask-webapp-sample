@@ -5,6 +5,8 @@
 ## Run local
 
 ```
+mongod --dbpath data/mongo
+
 virtualenv venv
 source venv/bin/activate
 
@@ -14,7 +16,7 @@ pip install Flask gunicorn
 heroku local
 ```
 
-## Deploy
+## Deploy to heroku
 
 ```
 heroku login
@@ -28,4 +30,5 @@ heroku open
 
 ```
 heroku addons:create mongolab
+heroku run python scripts/init_mongo.py
 ```
