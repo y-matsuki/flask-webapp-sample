@@ -10,8 +10,7 @@ mongod --dbpath data/mongo
 virtualenv venv
 source venv/bin/activate
 
-pip install Flask gunicorn passlib pymongo
-pip install Flask gunicorn
+pip install Flask Flask-Sessions gunicorn passlib pymongo
 
 heroku local
 ```
