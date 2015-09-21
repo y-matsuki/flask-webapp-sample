@@ -6,7 +6,7 @@ from passlib.apps import custom_app_context as pwd_context
 MONGOLAB_URI = os.environ.get('MONGOLAB_URI', 'mongodb://localhost:27017/local')
 
 client = MongoClient(MONGOLAB_URI)
-db  = client.db
+db  = client.get_default_database()
 
 f = open('data/users.csv')
 lines = f.readlines()
