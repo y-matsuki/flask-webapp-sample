@@ -1,8 +1,11 @@
+import os
 from pymongo import MongoClient
 from bson.json_util import dumps
 from passlib.apps import custom_app_context as pwd_context
 
-client = MongoClient('localhost', 27017)
+MONGOLAB_URI = os.environ.get('MONGOLAB_URI', 'mongodb://localhost:27017/')
+
+client = MongoClient(MONGOLAB_URI)
 db  = client.local
 
 f = open('data/users.csv')
