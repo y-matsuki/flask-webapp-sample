@@ -7,6 +7,8 @@ from passlib.apps import custom_app_context as pwd_context
 from datetime import datetime
 from common import db
 
+import sys, traceback
+
 pages = Blueprint('pages', __name__,
                 template_folder='templates')
 
@@ -24,10 +26,8 @@ def show():
 @pages.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        print('validate')
         if valid_login(request.form['username'],
                        request.form['password']):
-            print('ok')
             return redirect('/home')
         else:
             error = 'Invalid username/password'
@@ -42,15 +42,19 @@ def logout():
     return redirect(url_for('index'))
 
 def valid_login(username, password):
-    print(' before check')
     user = db.users.find_one({"username":username})
     print(user)
     if user == None:
         return False
     if pwd_context.verify(password, user["password"]):
-        print(' valid!')
-        session['username'] = user['username']
-        session['is_admin'] = user['is_admin']
-        print(' session ok')
+        try:
+            session['username'] = user['username']
+            session['is_admin'] = user['is_admin']
+        except:
+            print "Exception in user code:"
+            print '-'*60
+            traceback.print_exc(file=sys.stdout)
+            print '-'*60s
+
         return True
     return False
