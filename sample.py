@@ -27,6 +27,7 @@ def index():
     return redirect('/login')
 
 if __name__ == '__main__':
-    app.secret_key = '\x88\xfa\x0c\xaa\xb1%\xb29N\x8b\xd7\n\xdfa6\x1d\xd9a\xcd\xaa\x83\x08\xc1\xef'
+    app.config['SECRET_KEY'] = '\x88\xfa\x0c\xaa\xb1%\xb29N\x8b\xd7\n\xdfa6\x1d\xd9a\xcd\xaa\x83\x08\xc1\xef'
+    app.config['SESSION_TYPE'] = 'filesystem'
     # app.run(debug=True)
     app.run(host='0.0.0.0',debug=True)
