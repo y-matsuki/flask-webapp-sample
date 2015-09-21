@@ -1,3 +1,4 @@
+import os
 from flask import Flask, session
 from flask import request, redirect, url_for
 from flask import render_template
@@ -19,12 +20,15 @@ app.register_blueprint(bp_user, url_prefix='/user')
 app.register_blueprint(bp_event, url_prefix='/event')
 app.register_blueprint(bp_comment, url_prefix='/comment')
 
-MONGOLAB_URI = os.environ.get('MONGOLAB_URI', 'mongodb://localhost:27017/local')
-print(MONGOLAB_URI)
 SESSION_TYPE = 'mongodb'
-SESSION_MONGODB = MONGOLAB_URI.split('/')[2]
-SESSION_MONGODB_DB = MONGOLAB_URI.split('/')[3]
-SESSION_MONGODB_COLLECT = 'sessions'
+MONGOLAB_URI = os.environ.get('MONGOLAB_URI', None)
+if MONGOLAB_URI:
+    SESSION_MONGODB = MONGOLAB_URI.split('/')[2]
+    SESSION_MONGODB_DB = MONGOLAB_URI.split('/')[3]
+    SESSION_MONGODB_COLLECT = 'sessions'
+    print(MONGOLAB_URI)
+    print(SESSION_MONGODB_DB)
+    print(SESSION_MONGODB_COLLECT)
 app.config.from_object(__name__)
 Session(app)
 
