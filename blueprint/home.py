@@ -4,6 +4,7 @@ from flask import request, redirect, url_for
 from flask import render_template
 from flask import Blueprint, jsonify, session
 from datetime import datetime
+import pymongo
 
 from common import db
 
@@ -13,7 +14,7 @@ bp_home = Blueprint('bp_home', __name__,
 @bp_home.route('')
 def home():
     if 'username' in session:
-        events = db.events.find()
+        events = db.events.find().sort('date', pymongo.DESCENDING)
         past_events = []
         next_events = []
         for event in events:

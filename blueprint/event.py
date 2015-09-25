@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import re
+import re, pymongo
 from bson.json_util import dumps
 from flask import request, redirect, url_for
 from flask import render_template
@@ -15,12 +15,12 @@ bp_event = Blueprint('bp_event', __name__,
 @bp_event.route('/<event_id>')
 def event(event_id=None):
     if event_id == None:
-        events = db.events.find()
+        events = db.events.find().sort('date', pymongo.DESCENDING)
         return render_template('events.html', events=events)
     else:
-        events = db.events.find({"event_id":event_id})
-        for event in events:
-            users = db.users.find()
+        event = db.events.find_one({"event_id":event_id})
+        if event:
+            users = db.users.find().sort('username')
             print(event)
             return render_template('event.html', event=event, users=list(users))
         return redirect('/event')
@@ -32,7 +32,7 @@ def add_event():
         if request.form.has_key('event_id'):
             event_id = request.form['event_id']
             if re.compile(r'^[0-9A-Za-z-_.]+$').search(event_id) == None:
-                events = db.events.find()
+                events = db.events.find().sort('date', pymongo.DESCENDING)
                 message = 'the event id contains invald character.'
                 return render_template('events.html', events=events,
                                                       message=message)
@@ -81,5 +81,5 @@ def delete_event(event_id=None):
         event = db.events.find_one({"event_id":event_id})
         if event:
             db.events.delete_one(event)
-    events = db.events.find()
+    events = db.events.find().sort('date', pymongo.DESCENDING)
     return render_template('events.html', events=events)

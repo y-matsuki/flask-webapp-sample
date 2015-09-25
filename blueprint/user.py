@@ -16,13 +16,15 @@ bp_user = Blueprint('bp_user', __name__,
 @bp_user.route('/<username>')
 def user(username=None):
     if username == None and 'username' in session:
-        users = db.users.find()
+        users = db.users.find().sort('username')
         return render_template('users.html', users=users)
     else:
         if session['username'] == username or session['is_admin']:
-            users = db.users.find({"username":username})
-            for user in users:
+            user = db.users.find_one({"username":username})
+            if user:
                 return render_template('user.html', user=user)
+            else:
+                return redirect('/user')
         else:
             return redirect('/user')
 
@@ -67,5 +69,5 @@ def delete_user(username=None):
         user = db.users.find_one({"username":username})
         if user:
             db.users.delete_one(user)
-    users = db.users.find()
+    users = db.users.find().sort('username')
     return render_template('users.html', users=users)
