@@ -23,6 +23,8 @@ Home
   {% for theme in event.themes if not theme.username == '' %}
   <div class="card">
     <div class="content">
+      <img class="right floated mini ui image"
+          src="//www.gravatar.com/avatar/{{ theme.icon }}?d=identicon">
       <div class="header">{{ theme.username }}</div>
       <div class="description">
         {{ theme.title }}
@@ -54,6 +56,8 @@ Home
   {% for theme in event.themes if not theme.username == '' %}
   <div class="card">
     <div class="content">
+      <img class="right floated mini ui image"
+          src="//www.gravatar.com/avatar/{{ theme.icon }}?d=identicon">
       <div class="header">{{ theme.username }}</div>
       <div class="description">
         {{ theme.title }}
