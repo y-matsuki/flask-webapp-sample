@@ -5,7 +5,7 @@ function get_all_points() {
     var type = $(this).data('type');
     $.get('/point/api/'+event+'/'+user+'/'+type, function(data) {
       user = user.replace('.', '-');
-      $('span.'+event+'.'+user+'.'+type).text(JSON.parse(data).count);
+      $('span.'+event+'.'+user+'.'+type).text(data.count);
     });
   });
 };

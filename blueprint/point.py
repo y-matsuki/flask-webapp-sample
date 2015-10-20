@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 from bson.json_util import dumps
 from flask import request, redirect, url_for
 from flask import render_template
@@ -16,7 +17,7 @@ def get_point(event_id=None,presenter=None,type=None):
         count = db.points.find_one(
             {"event_id":event_id,"presenter":presenter,"type":type})
         if count:
-            return dumps(count)
+            return jsonify(json.loads(dumps(count)))
     return jsonify({ "count": 0 })
 
 
@@ -28,5 +29,5 @@ def increment_point(event_id=None,presenter=None,type=None):
             {'$inc': {'count': 1}}, upsert=True)
         count = db.points.find_one(
             {"event_id":event_id,"presenter":presenter,"type":type})
-        return dumps(count)
+        return jsonify(json.loads(dumps(count)))
     return jsonify({ "count": 0 })
