@@ -74,14 +74,14 @@ Home
       <span class="left floated like">
         <div class="ui blue label clickable" data-event="{{ event.event_id }}"
           data-user="{{ theme.username }}" data-type="hey">
-          <span class="{{ event.event_id }} {{ theme.username }} hey">0</span>
+          <span class="{{ event.event_id }} {{ theme.username|replace(".","-") }} hey">0</span>
           <span class="detail">へぇ</span>
         </div>
       </span>
       <span class="right floated star">
         <div class="ui pink label clickable" data-event="{{ event.event_id }}"
           data-user="{{ theme.username }}" data-type="dig">
-          <span class="{{ event.event_id }} {{ theme.username }} dig">0</span>
+          <span class="{{ event.event_id }} {{ theme.username|replace(".","-") }} dig">0</span>
           <span class="detail">もっと</span>
         </div>
       </span>

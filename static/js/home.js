@@ -4,6 +4,7 @@ function get_all_points() {
     var user = $(this).data('user');
     var type = $(this).data('type');
     $.get('/point/api/'+event+'/'+user+'/'+type, function(data) {
+      user = user.replace('.', '-');
       $('span.'+event+'.'+user+'.'+type).text(JSON.parse(data).count);
     });
   });
