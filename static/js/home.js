@@ -17,6 +17,8 @@ $(document).ready(function() {
       var user = $(this).data('user');
       var type = $(this).data('type');
       $.post('/point/api/'+event+'/'+user+'/'+type);
+      //自分が投票した内容はすぐに反映するように変更
+      get_all_points();
       $(this).addClass('inverted');
       $(this).delay(1000).queue(function() {
         $(this).removeClass('inverted');
